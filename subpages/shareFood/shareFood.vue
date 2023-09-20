@@ -34,11 +34,11 @@
 		<!-- 填写文字部分 -->
 		<view style="margin-top: 10rpx;">
 			<input class="uni-input" placeholder="填写标题会有更多赞哦~" placeholder-class="my-input-placeholder" />
-			<u-line class="u-line" color='#e7e7e7' style="margin: 5rpx 0  5rpx 0; height: 2rpx;"></u-line>
+			<view class="uline"></view>
 
 			<textarea class="u-textinput" placeholder="添加粤菜介绍" placeholder-class="my-input-placeholder"
 				placeholder-style="font-size:28rpx;" />
-			<u-line class="u-line" color='#e7e7e7'></u-line>
+			<view class="uline"></view>
 
 			<!-- 分类选择 -->
 			<view class="selectBox" @click="bindPickerChange">
@@ -50,11 +50,11 @@
 				<text class="iconfont icon-xiangyoujiantou rightText"></text>
 				<u-select v-model="show" mode="single-column" :list="list" @confirm="confirm"></u-select>
 			</view>
-			<u-line class="u-line" color='#e7e7e7'></u-line>
+			<view class="uline"></view>
 
 			<!-- 定位选择 -->
-			<view class="locateBox" @click="getLocation">
-				<view class="topBox">
+			<view class="locateBox locate" @click="getLocation">
+				<view class="topBox locate">
 					<view>
 						<text class="iconfont icon-address" style="margin-right: 6rpx;"
 							:style="'color:'+textcolor"></text>
@@ -66,11 +66,12 @@
 					</view>
 				</view>
 
-				<view class="addressBox" v-show="isHasLocation">
+				<view class="addressBox locate" v-show="isHasLocation">
 					<text>{{longAddress}}</text>
 				</view>
-				<u-line class="u-line" color='#e7e7e7'></u-line>
+				<view class="uline" ></view>
 			</view>
+			
 		</view>
 		<div class="goods-carts">
 			<uni-goods-nav :fill="true" :options="options" :button-group="customButtonGroup1" @click="onClick"
@@ -180,7 +181,7 @@
 				})
 			},
 			chooseImage: function() {
-				let allImageUrl=[]
+				let allImageUrl = []
 				uni.chooseImage({
 					count: this.imageList.length + this.count[this.countIndex] > 9 ? 9 - this.imageList
 						.length : this.count[this.countIndex],
@@ -188,24 +189,24 @@
 						if (res.tempFilePaths.length >= 9) {
 							this.isOverNum = 'none'
 						}
-						
+
 						const tempFilePaths = res.tempFilePaths;
 						for (let i = 0; i < tempFilePaths.length; i++) {
 							uni.uploadFile({
 								url: 'http://192.168.100.125:3000/uniapi/upload',
 								filePath: tempFilePaths[i],
 								name: 'file',
-								success:function(res) {
+								success: function(res) {
 									allImageUrl.push(JSON.parse(res.data).data[0].data)
 									console.log(allImageUrl)
-									uni.setStorageSync('AllImageUrl',allImageUrl)
+									uni.setStorageSync('AllImageUrl', allImageUrl)
 								},
 								fail: (err) => {
 									console.error(err);
 								}
 							});
 						}
-                        
+
 						this.imageList = [...this.imageList, ...res.tempFilePaths];
 						console.log(this.imageList)
 
@@ -247,6 +248,12 @@
 
 	}
 
+	.uline {
+		border-bottom: 0.5rpx solid #e7e7e7 ;
+		height: 1rpx;
+		margin: 10rpx 0 10rpx 0;
+	}
+
 	.my-input-placeholder {
 		color: #a0a0a0;
 		font-size: 28rpx;
@@ -278,12 +285,14 @@
 
 	.locateBox {
 		width: 100%;
-		padding: 0rpx 10rpx;
 		height: 80rpx;
 		line-height: 80rpx;
 		display: flex;
 		flex-direction: column;
-
+        
+		.locate{
+			padding: 0rpx 10rpx;
+		}
 		.topBox {
 			display: flex;
 			justify-content: space-between;
