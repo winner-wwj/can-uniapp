@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "分享",
+  "navigationBarBackgroundColor": "#FFFFFF",
+  "enablePullDownRefresh": false,
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "tabbar": "/components/tabbar/tabbar"
+  }
+}

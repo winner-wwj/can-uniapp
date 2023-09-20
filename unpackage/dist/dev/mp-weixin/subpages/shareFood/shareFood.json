@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "粤菜分享",
+  "enablePullDownRefresh": false,
+  "navigationBarBackgroundColor": "#FFFFFF",
+  "usingComponents": {
+    "u-line": "/node-modules/uview-ui/components/u-line/u-line",
+    "u-select": "/node-modules/uview-ui/components/u-select/u-select",
+    "uni-goods-nav": "/uni_modules/uni-goods-nav/components/uni-goods-nav/uni-goods-nav"
+  }
+}

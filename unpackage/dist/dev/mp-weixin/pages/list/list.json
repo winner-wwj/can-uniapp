@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "热度榜",
+  "navigationBarBackgroundColor": "#FFFFFF",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "tabbar": "/components/tabbar/tabbar",
+    "weixin-popup": "/components/other/wxPopup"
+  }
+}

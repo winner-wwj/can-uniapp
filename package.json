@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "ajv-errors": "^1.0.1",
+    "ajv-formats": "^2.1.1",
+    "axios": "^1.5.0",
+    "form-data": "^4.0.0",
+    "node": "^20.5.0",
+    "scss": "^0.2.4",
+    "uview": "^0.1.0",
+    "uview-ui": "^1.8.8",
+    "vant": "^2.12.54"
+  },
+  "devDependencies": {
+    "ajv": "^7.2.4",
+    "babel-plugin-import": "^1.13.8",
+    "sass-loader": "^13.3.2"
+  }
+}

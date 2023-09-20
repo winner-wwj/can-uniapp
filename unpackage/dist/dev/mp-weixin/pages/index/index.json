@@ -1,0 +1,13 @@
+{
+  "navigationBarTitleText": "粤之味",
+  "navigationBarBackgroundColor": "#FFFFFF",
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "uni-fab": "/uni_modules/uni-fab/components/uni-fab/uni-fab",
+    "tabbar": "/components/tabbar/tabbar",
+    "wxnav": "/components/navigation/WX_nv/WX_nv",
+    "h5nav": "/components/navigation/H5_nv",
+    "u-swiper": "/components/u-swiper/u-swiper",
+    "weixin-popup": "/components/other/wxPopup"
+  }
+}

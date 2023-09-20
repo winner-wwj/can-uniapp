@@ -1,0 +1,185 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "粤之味",
+				"navigationBarBackgroundColor": "#FFFFFF", //头部背景颜色是白色
+				"navigationStyle": "custom", //自定义顶部
+				"app-plus": {
+					"scrollIndicator": "none", //取消滚动条
+					"titleNView": {
+						"searchInput": { //titleNView自带的搜索输入框
+							"placeholder": "搜索粤菜、菜谱",
+							"disabled": true,
+							"align": "center",
+							"borderRadius": "15px",
+							"backgroundColor": "#F7F7F7",
+							"placeholderColor": "#B3B3B3"
+						},
+						"buttons": [{
+								"float": "left",
+								"color": "#171717",
+								"text": "定位..",
+								"fontSize": "16px",
+								"width": "65px",
+								"select": true
+							},
+							{
+								"float": "right",
+								"fontSrc": "./static/icons/iconfont.ttf",
+								"text": "\ue638"
+							}
+						]
+					}
+
+				}
+			}
+		}, {
+			"path": "pages/list/list",
+			"style": {
+				"navigationBarTitleText": "热度榜",
+				"navigationBarBackgroundColor": "#FFFFFF",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/sharing/sharing",
+			"style": {
+				"navigationBarTitleText": "分享",
+				"navigationBarBackgroundColor": "#FFFFFF",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom",
+				"app-plus": {
+					"background": "transparent", //背景透明
+					"backgroundColor": "rgba(0,0,0,0)", //背景透明
+					"popGesture": "none", //禁止苹果侧滑返回
+					"disableSwipeBack": true // 禁止IOS侧滑事件
+				}
+
+			}
+
+		}, {
+			"path": "pages/message/message",
+			"style": {
+				"navigationBarTitleText": "消息",
+				"navigationBarBackgroundColor": "#FFFFFF",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/my/my",
+			"style": {
+				"navigationBarTitleText": "我的",
+				"navigationBarBackgroundColor": "#FFFFFF",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "components/tabbar/tabbar",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "components/navigation/WX_nv/WX_nv",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": true,
+				"mp-weixin": { //微信插件
+					"usingComponents": {
+						"citySelector": "plugin://citySelector/selector-component"
+					}
+				}
+			}
+
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "粤子味",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8",
+		"usingComponents": {
+			"van-popup": "/wxcomponents/vant-weapp/popup/index",
+			"van-button": "/wxcomponents/vant-weapp/button/index"
+		}
+	},
+
+	"uniIdRouter": {},
+	"subPackages": [{ //配置分包
+		"root": "subpages", //根文件夹
+		"pages": [{
+			"path": "selectCity/selectCity",
+			"usingComponents": {
+				"selector-component": "plugin://citySelector/selector-component"
+			},
+			"style": {
+				"navigationBarTitleText": "选择城市",
+				"navigationBarBackgroundColor": "#FFFFFF",
+				"enablePullDownRefresh": false,
+				"app-plus": {
+					"scrollIndicator": "none" //取消滚动条
+				}
+			}
+
+		}, {
+			"path": "shareFood/shareFood",
+			"style": {
+				"navigationBarTitleText": "粤菜分享",
+				"enablePullDownRefresh": false,
+				"navigationBarBackgroundColor": "#FFFFFF",
+				"app-plus": {
+					"scrollIndicator": "none", //取消滚动条
+					"titleNView": {
+						"splitLine": true
+					}
+				}
+			}
+
+		}]
+	}],
+
+	"tabBar": {
+		"color": "#636263", //字体颜色
+		"selectedColor": "#0ee7e6", //选中颜色
+		"backgroundColor": "#ffffff",
+
+		"list": [{
+				"pagePath": "pages/index/index",
+				"iconPath": "static/tabbar_icon/index.png",
+				"selectedIconPath": "static/tabbar_icon/indexSelected.png",
+				"text": "首页"
+			},
+			{
+				"pagePath": "pages/list/list",
+				"iconPath": "static/tabbar_icon/list.png",
+				"selectedIconPath": "static/tabbar_icon/listSelected.png",
+				"text": "排行榜"
+			},
+			// {
+			// 	"pagePath": "pages/sharing/sharing",
+			// 	"iconPath": "static/tabbar_icon/share.png",
+			// 	"text": "分享"
+			// },
+			{
+				"pagePath": "pages/message/message",
+				"iconPath": "static/tabbar_icon/message.png",
+				"selectedIconPath": "static/tabbar_icon/messageSelected.png",
+				"text": "消息"
+			},
+			{
+				"pagePath": "pages/my/my",
+				"iconPath": "static/tabbar_icon/my.png",
+				"selectedIconPath": "static/tabbar_icon/mySelected.png",
+				"text": "我的"
+			}
+		]
+	},
+	"easycom": {
+		"^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
+	}
+
+
+}

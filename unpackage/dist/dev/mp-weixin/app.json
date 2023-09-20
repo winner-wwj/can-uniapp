@@ -1,0 +1,79 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/list/list",
+    "pages/sharing/sharing",
+    "pages/message/message",
+    "pages/my/my",
+    "components/tabbar/tabbar",
+    "components/navigation/WX_nv/WX_nv"
+  ],
+  "subPackages": [
+    {
+      "root": "subpages",
+      "pages": [
+        "selectCity/selectCity",
+        "shareFood/shareFood"
+      ]
+    }
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "粤子味",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#636263",
+    "selectedColor": "#0ee7e6",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/tabbar_icon/index.png",
+        "selectedIconPath": "static/tabbar_icon/indexSelected.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/list/list",
+        "iconPath": "static/tabbar_icon/list.png",
+        "selectedIconPath": "static/tabbar_icon/listSelected.png",
+        "text": "排行榜"
+      },
+      {
+        "pagePath": "pages/message/message",
+        "iconPath": "static/tabbar_icon/message.png",
+        "selectedIconPath": "static/tabbar_icon/messageSelected.png",
+        "text": "消息"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "iconPath": "static/tabbar_icon/my.png",
+        "selectedIconPath": "static/tabbar_icon/mySelected.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "将获取您的具体位置信息，用于为您推荐附近的粤菜分享"
+    },
+    "scope.userFuzzyLocation": {
+      "desc": "将获取您的具体位置信息，用于为您推荐附近的粤菜分享"
+    }
+  },
+  "requiredPrivateInfos": [
+    "chooseLocation",
+    "getLocation"
+  ],
+  "plugins": {
+    "citySelector": {
+      "version": "1.0.2",
+      "provider": "wx63ffb7b7894e99ae"
+    }
+  },
+  "usingComponents": {
+    "van-popup": "/wxcomponents/vant-weapp/popup/index",
+    "van-button": "/wxcomponents/vant-weapp/button/index"
+  }
+}
