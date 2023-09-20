@@ -1,9 +1,0 @@
-{
-  "navigationBarTitleText": "我的",
-  "navigationBarBackgroundColor": "#FFFFFF",
-  "enablePullDownRefresh": false,
-  "usingComponents": {
-    "tabbar": "/components/tabbar/tabbar",
-    "weixin-popup": "/components/other/wxPopup"
-  }
-}
