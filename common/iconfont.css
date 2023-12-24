@@ -1,7 +1,6 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4175636 */
   src: url('./static/icons/iconfont.ttf?t=1691387718867') format('truetype');
-
 }
 
 .iconfont {
@@ -10,6 +9,18 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-weixin:before {
+  content: "\e7e5";
+}
+
+.icon-mima:before {
+  content: "\e66e";
+}
+
+.icon-caogaoxiang:before {
+  content: "\e726";
 }
 
 .icon-xiangyoujiantou:before {

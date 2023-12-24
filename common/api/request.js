@@ -1,7 +1,7 @@
 // 封装request,方便后续开发接口变换时的修改
 export default {
 	common: {
-		baseUrl: "http://192.168.100.125:3000/uniapi",
+		baseUrl: "http://192.168.100.175:3000/uniapi",
 		data: {},
 		header: {
 			"Content-Type": "application/json",
@@ -43,7 +43,7 @@ export default {
 					// 	uni.hideLoading();
 					// }, 1000);
 
-					let data = result.data.data;
+					let data = result.data;
 					res(data); //成功后传递请求过来的数据
 				}
 			})

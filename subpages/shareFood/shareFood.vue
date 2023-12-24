@@ -9,7 +9,6 @@
 						<view class="uni-uploader-info">{{imageList.length}}/9</view>
 					</view>
 					<view class="uni-uploader-body">
-
 						<view class="uni-uploader__files">
 							<block v-for="(image,index) in imageList" :key="index">
 								<view class="uni-uploader__file">
@@ -33,11 +32,13 @@
 
 		<!-- 填写文字部分 -->
 		<view style="margin-top: 10rpx;">
-			<input class="uni-input" placeholder="填写标题会有更多赞哦~" placeholder-class="my-input-placeholder" />
+			<input class="uni-input" v-model="title" placeholder="填写标题会有更多赞哦~" placeholder-class="my-input-placeholder"
+				@input="getTitle" />
 			<view class="uline"></view>
 
-			<textarea class="u-textinput" placeholder="添加粤菜介绍" placeholder-class="my-input-placeholder"
-				placeholder-style="font-size:28rpx;" />
+			<textarea class="u-textinput" v-model="introduction" placeholder="添加粤菜介绍"
+				placeholder-class="my-input-placeholder" placeholder-style="font-size:28rpx;"
+				@input="getIntroduction" />
 			<view class="uline"></view>
 
 			<!-- 分类选择 -->
@@ -46,7 +47,7 @@
 					<text class="iconfont icon-gongneng" style="margin-right: 6rpx;"></text>
 					<text>分类选择</text>
 				</view>
-				<view class="category">{{list[selectIndex].label}}</view>
+				<view class="category">{{list.length==0 ? '' : list[selectIndex].label}}</view>
 				<text class="iconfont icon-xiangyoujiantou rightText"></text>
 				<u-select v-model="show" mode="single-column" :list="list" @confirm="confirm"></u-select>
 			</view>
@@ -69,13 +70,13 @@
 				<view class="addressBox locate" v-show="isHasLocation">
 					<text>{{longAddress}}</text>
 				</view>
-				<view class="uline" ></view>
+				<view class="uline"></view>
 			</view>
-			
+
 		</view>
 		<div class="goods-carts">
 			<uni-goods-nav :fill="true" :options="options" :button-group="customButtonGroup1" @click="onClick"
-				@buttonClick="buttonClick" style="margin-top: 10rpx;" />
+				@buttonClick="submitData" style="margin-top: 10rpx;" />
 		</div>
 	</view>
 </template>
@@ -85,6 +86,10 @@
 	export default {
 		data() {
 			return {
+				location: '',
+				category: '',
+				introduction: '',
+				title: '',
 				selectTxt: '选择',
 				isHasLocation: false,
 				longAddress: '',
@@ -92,27 +97,13 @@
 				textcolor: '',
 				isOverNum: 'block',
 				imageList: [],
+				allImageUrl: [],
+				categoryList: [],
 				count: [1, 2, 3, 4, 5, 6, 7, 8, 9],
 				countIndex: 8,
 				show: false,
 				selectIndex: 0,
-				list: [{
-						value: '0',
-						label: '中国'
-					},
-					{
-						value: '1',
-						label: '美国'
-					},
-					{
-						value: '2',
-						label: '巴西'
-					},
-					{
-						value: '3',
-						label: '日本'
-					}
-				],
+				list: [],
 				options: [{
 					icon: 'calendar',
 					text: '存草稿'
@@ -124,20 +115,131 @@
 				}]
 			}
 		},
+		onLoad() {
+			$http.request({
+				url: '/categorylist'
+			}).then(res => {
+				this.categoryList = res.data.data
+				this.categoryList.forEach((item, id) => {
+					let obj = {}
+					obj.value = id + 1;
+					obj.label = item.categoryName
+					this.list.push(obj)
 
+				})
+				console.log(this.list)
+			})
+
+		},
 		methods: {
+			getIntroduction(e) {
+				this.introduction = e.detail.value
+				console.log(this.introduction)
+			},
+			getTitle(e) {
+				this.title = e.detail.value
+				console.log(this.title)
+			},
 			onClick(e) {
 				uni.showToast({
 					title: '已存为草稿',
 					icon: 'none'
 				})
 			},
-			buttonClick(e) {
-				console.log(e)
-				this.options[2].info++
+			submitData(e) {
+				var allSubmitData = {
+					imageUrl: this.allImageUrl,
+					title: this.title,
+					introduction: this.introduction,
+					category: this.category,
+					address: this.location,
+				}
+				console.log(allSubmitData,"提交粤菜分享的数据")
+				let that = this
+				var proxy = new Proxy(allSubmitData, {
+					get(target, prop) {
+						if (target[prop] == "") {
+							let current = prop
+
+							function setToast(message) {
+								uni.showToast({
+									title: message,
+									icon: 'error',
+									duration: 2000
+								});
+							}
+
+							switch (current) {
+								case 'imageUrl':
+									setToast('请上传粤菜图片');
+									break;
+								case 'title':
+									setToast('标题不能为空');
+									break;
+								case 'introduction':
+									setToast('介绍内容不能为空');
+									break;
+								case 'category':
+									setToast('请选择分类');
+									break;
+								case 'address':
+									setToast('请获取粤菜分享的定位');
+									break;
+							}
+						}
+
+						return target[prop]
+					}
+				})
+
+				// 判断所有属性值是否都不为空
+				if (Object.values(proxy).every(value => value !== "")) {
+					$http.request({
+						url: '/shareFood',
+						method: 'POST',
+						data: {
+							imageUrl: proxy.imageUrl,
+							title: proxy.title,
+							introduction: proxy.introduction,
+							category: proxy.category,
+							address: proxy.address
+						},
+					}).then(res => {
+						if (res.code == '1') {
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'success',
+								duration: 2000
+							})
+							allSubmitData = {};
+
+							that.allImageUrl = '',
+							that.title = '',
+							that.introduction = '',
+							that.category = '',
+							that.location = '',
+							that.imageList = '',
+							that.mainAddress =  '所在位置',
+							that.longAddress = '',
+							that.isHasLocation = false,
+							that.selectIndex=0,
+							that.selectTxt= '选择',
+							that.textcolor='#303133'
+
+						} else {
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'error',
+								duration: 2000
+							})
+						}
+					})
+				}
 			},
 			getLocation() {
 				let that = this
+				var address
+				var name
 				uni.chooseLocation({
 					success: function(res) {
 						if (res.errMsg === 'chooseLocation:ok') {
@@ -145,9 +247,12 @@
 								that.mainAddress = res.name,
 								that.longAddress = res.address,
 								that.isHasLocation = true,
-								that.selectTxt = '更换'
+								that.selectTxt = '更换',
+								address = res.address,
+								name = res.name
 						}
-						console.log(res);
+						that.location = address + ' ' + name
+						console.log(that.location);
 					}
 				});
 			},
@@ -156,7 +261,8 @@
 			},
 			confirm(e) {
 				this.selectIndex = e[0].value
-				console.log(this.selectIndex)
+				this.category = this.list[this.selectIndex].label
+				console.log(this.category)
 			},
 			deImg(index) {
 				uni.showModal({
@@ -181,7 +287,6 @@
 				})
 			},
 			chooseImage: function() {
-				let allImageUrl = []
 				uni.chooseImage({
 					count: this.imageList.length + this.count[this.countIndex] > 9 ? 9 - this.imageList
 						.length : this.count[this.countIndex],
@@ -191,15 +296,16 @@
 						}
 
 						const tempFilePaths = res.tempFilePaths;
+
 						for (let i = 0; i < tempFilePaths.length; i++) {
+							let that = this
 							uni.uploadFile({
-								url: 'http://192.168.100.125:3000/uniapi/upload',
+								url: 'http://192.168.100.175:3000/uniapi/upload',
 								filePath: tempFilePaths[i],
 								name: 'file',
 								success: function(res) {
-									allImageUrl.push(JSON.parse(res.data).data[0].data)
-									console.log(allImageUrl)
-									uni.setStorageSync('AllImageUrl', allImageUrl)
+									that.allImageUrl.push(JSON.parse(res.data).data[0].data)
+									console.log(that.allImageUrl)
 								},
 								fail: (err) => {
 									console.error(err);
@@ -249,7 +355,7 @@
 	}
 
 	.uline {
-		border-bottom: 0.5rpx solid #e7e7e7 ;
+		border-bottom: 0.5rpx solid #e7e7e7;
 		height: 1rpx;
 		margin: 10rpx 0 10rpx 0;
 	}
@@ -289,10 +395,11 @@
 		line-height: 80rpx;
 		display: flex;
 		flex-direction: column;
-        
-		.locate{
+
+		.locate {
 			padding: 0rpx 10rpx;
 		}
+
 		.topBox {
 			display: flex;
 			justify-content: space-between;

@@ -71,8 +71,10 @@
 			"path": "pages/my/my",
 			"style": {
 				"navigationBarTitleText": "我的",
-				"navigationBarBackgroundColor": "#FFFFFF",
+				"navigationBarBackgroundColor": "#33d0f1",
+				"navigationBarTextStyle": "#ffffff",
 				"enablePullDownRefresh": false
+
 			}
 
 		}, {
@@ -138,6 +140,14 @@
 				}
 			}
 
+		}, {
+			"path": "login/login",
+			"style": {
+				"navigationBarTitleText": "登录",
+				"enablePullDownRefresh": false,
+				"navigationBarBackgroundColor": "#FFFFFF"
+			}
+
 		}]
 	}],
 
@@ -178,8 +188,9 @@
 		]
 	},
 	"easycom": {
+		// "autoscan": true,
 		"^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
+		
 	}
-
 
 }

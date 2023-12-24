@@ -32,35 +32,31 @@
 			</scroll-view>
 		</view>
 
-        <!-- 内容模块 -->
+		<!-- 内容模块 -->
 		<swiper @change='onChangeTab' :current="topBarIndex" :style="'height:'+clentHeight+'px;'">
 			<swiper-item></swiper-item>
 			<swiper-item>
 				<scroll-view scroll-y="true" :style="'height:'+clentHeight+'px;'">
 					<view>
 						<!-- 轮播 -->
-						<uSwiper :list="list" :height="600" indicator-pos="bottomLeft"></uSwiper>
+						<!-- <uSwiper :list="list" :height="600" indicator-pos="bottomLeft"></uSwiper> -->
 						<!-- #ifdef APP-PLUS -->
-						 <!-- <uSwiper :list="list" :height="400"  indicator-pos="bottomLeft" ></uSwiper> -->
+						<!-- <uSwiper :list="list" :height="400"  indicator-pos="bottomLeft" ></uSwiper> -->
 						<!-- #endif -->
-						<view class="">
-							<van-button type="primary" @click='login'>主要按钮</van-button>
-							<image src="http://cantonese-1319255461.cos.ap-guangzhou.myqcloud.com/upload-images/1694882158876.jpg" mode=""></image>
-						</view>
+						
 					</view>
 				</scroll-view>
 			</swiper-item>
 			<swiper-item></swiper-item>
 			<swiper-item></swiper-item>
 		</swiper>
-	
-        <!-- 微信端分享发布的弹出层 -->
-	   <!-- #ifdef MP-WEIXIN-->
-	   		<van-popup :show="flag" round closeable  @close="closepop" position="bottom"
-	   			custom-style="height:50%;">
-	   			<wxPopup></wxPopup>
-	   		</van-popup>
-	   <!-- #endif -->
+
+		<!-- 微信端分享发布的弹出层 -->
+		<!-- #ifdef MP-WEIXIN-->
+		<van-popup :show="flag" round closeable @close="closepop" position="bottom" custom-style="height:50%;">
+			<wxPopup></wxPopup>
+		</van-popup>
+		<!-- #endif -->
 		<Tabbar :current-page="0" @userData="getdata"></Tabbar>
 	</view>
 
@@ -71,6 +67,7 @@
 	let qqmapsdk = new QQMapWX({
 		key: 'GKFBZ-ERIKQ-NRZ5Q-4EBDC-XRUDT-GKBN7'
 	});
+	import $http from '@/common/api/request.js'
 	import Tabbar from '@/components/tabbar/tabbar.vue'
 	import Wxnav from '@/components/navigation/WX_nv/WX_nv.vue'
 	import H5nav from '@/components/navigation/H5_nv.vue'
@@ -79,6 +76,7 @@
 	export default {
 		data() {
 			return {
+				code: '',
 				flag: false,
 				topBarIndex: 1, //选中的索引
 				clentHeight: 0, //内容块的高度值
@@ -90,6 +88,9 @@
 				latitude: '',
 				longitude: '',
 				location: '',
+				userInfo: '',
+				session_key: '',
+				openid: '',
 				pattern: {
 					color: '#7A7E83',
 					backgroundColor: '#fff',
@@ -224,14 +225,8 @@
 			// #endif
 		},
 		methods: {
-			login(){
-				uni.login({
-					provider: 'univerify',
-					univerifyStyle: { 
-				    fullScreen: true
-				  }
-				})
-			},
+			
+
 			//获取可视区域高度
 			getClientHeight() {
 				const res = uni.getSystemInfoSync(); //加了Sync是使用同步获取系统信息
@@ -287,7 +282,7 @@
 							longitude
 						},
 						success: (res) => {
-                            
+
 							resolve(res)
 						}
 					})
@@ -349,7 +344,7 @@
 			},
 			getdata(e) {
 				this.flag = e
-				
+
 			},
 			closepop() {
 				this.flag = false;
@@ -416,5 +411,4 @@
 	.f-color {
 		color: #6b6b6b;
 	}
-	
 </style>

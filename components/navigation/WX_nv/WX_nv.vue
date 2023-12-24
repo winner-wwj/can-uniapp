@@ -88,7 +88,7 @@
 		margin-left: 15rpx;
 		justify-content: center;
 		align-items: center;
-		background-color: #F7F7F7;
+		background-color:#f6f6f6;
 		border-radius: 30rpx;
 
 		.searIcon {
